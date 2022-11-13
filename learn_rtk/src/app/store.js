@@ -1,23 +1,56 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { compose } from "redux";
 
-import monitorReducersEnhancer from "./enhancers/monitorReducers";
-import loggerMiddleware from "./middleware/logger";
-import rootReducer from "./reducers";
+function newDispatch(createStore) {
+    return function (reducer, preLoadedState, enhancers) {
+        let store = createStore(reducer, preLoadedState, enhancers);
 
-export default function configureAppStore(preloadedState) {
-    const store = configureStore({
-        reducer: rootReducer,
-        middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware().concat(loggerMiddleware),
-        preloadedState,
-        enhancers: [monitorReducersEnhancer],
-    });
+        function newDispatch(action) {
+            const result = store.dispatch(action);
+            console.log("Hello world, Perform LOgging");
+            return result;
+        }
+        return { ...store, dispatch: newDispatch };
+    };
+}
 
-    if (process.env.NODE_ENV !== "production" && module.hot) {
-        module.hot.accept("./reducers", () =>
-            store.replaceReducer(rootReducer)
-        );
+function newState(createStore) {
+    return function (reducer, preLoadedState, enhancers) {
+        let store = createStore(reducer, preLoadedState, enhancers);
+
+        function newState() {
+            return {
+                ...store.getState(),
+                hai: "Hello world",
+            };
+        }
+        return { ...store, getState: newState };
+    };
+}
+
+const enhancers = compose(newDispatch, newState);
+
+//reducer
+function counterReducer(state = initialState, action) {
+    if (action.type === "increment") {
+        return {
+            ...state,
+            counter: state.counter + 1,
+        };
     }
 
-    return store;
+    if (action.type === "decrement") {
+        return {
+            ...state,
+            counter: state.counter - 1,
+        };
+    }
+
+    return state;
 }
+
+//create store
+export const store = configureStore({
+    reducer: counterReducer,
+    enhancers,
+});
