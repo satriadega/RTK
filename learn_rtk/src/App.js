@@ -1,37 +1,35 @@
 import "./App.css";
-import { useDispatch } from "react-redux";
-import { store } from "./app/store";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
     const dispatch = useDispatch();
+    const counter = useSelector((state) => state.counter.counter);
 
-    function render() {
-        const state = store.getState();
+    // function render() {
+    //     const state = store.getState();
 
-        console.log(state);
-        document.getElementById("counter").innerHTML = state.counter;
-    }
-    render();
+    //     console.log(state);
+    //     document.getElementById("counter").innerHTML = state.counter;
+    // }
+    // render();
 
-    store.subscribe(render);
+    // store.subscribe(render);
 
-    document.getElementById("increment").addEventListener("click", function () {
-        store.dispatch(increment());
-    });
+    // document.getElementById("increment").addEventListener("click", function () {
+    //     store.dispatch(increment());
+    // });
 
-    document.getElementById("decrement").addEventListener("click", function () {
-        store.dispatch(decrement());
-    });
+    // document.getElementById("decrement").addEventListener("click", function () {
+    //     store.dispatch(decrement());
+    // });
 
     return (
         <div className="App">
             <div>Counter Example</div>
-            <div id="counter">0</div>
+            <div id="counter">{counter}</div>
             <div>
-                <button id="increment" onClick={() => dispatch(increment())}>
-                    Increment
-                </button>
-                <button id="decrement">Decrement</button>
+                <button onClick={() => dispatch("increment")}>Increment</button>
+                <button onClick={() => dispatch("decrement")}>Decrement</button>
             </div>
         </div>
     );

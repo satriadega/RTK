@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { compose } from "redux";
+import counterReducer from "../features/counter/counterSlice";
+import { compose } from "@reduxjs/toolkit";
 
 function newDispatch(createStore) {
     return function (reducer, preLoadedState, enhancers) {
@@ -29,25 +30,6 @@ function newState(createStore) {
 }
 
 const enhancers = compose(newDispatch, newState);
-
-//reducer
-function counterReducer(state = initialState, action) {
-    if (action.type === "increment") {
-        return {
-            ...state,
-            counter: state.counter + 1,
-        };
-    }
-
-    if (action.type === "decrement") {
-        return {
-            ...state,
-            counter: state.counter - 1,
-        };
-    }
-
-    return state;
-}
 
 //create store
 export const store = configureStore({
