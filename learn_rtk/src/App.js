@@ -1,10 +1,13 @@
-import "./App.css";
-import { Counter } from "./features/counter/Counter";
+import Header from "./components/Header/Header";
+import Library from "./components/Library/Library";
+import AddBook from "./components/AddBook/AddBook";
 
 function App() {
     return (
         <div className="App">
-            <Counter />
+            <Header />
+            <AddBook />
+            <Library />
         </div>
     );
 }
