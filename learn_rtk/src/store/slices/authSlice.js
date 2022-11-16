@@ -20,7 +20,7 @@ export const fetchRandomUserData = createAsyncThunk(
     }
 );
 
-console.log(fetchRandomUserData);
+// console.log(fetchRandomUserData);
 
 const authSlice = createSlice({
     name: "auth",

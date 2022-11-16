@@ -34,7 +34,7 @@ const booksSlice = createSlice({
     },
 });
 
-console.log(booksSlice);
+// console.log(booksSlice);
 
 export const { addBook, deleteBook } = booksSlice.actions;
 

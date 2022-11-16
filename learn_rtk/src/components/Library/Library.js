@@ -30,13 +30,15 @@ const Library = () => {
         <div className="library">
             <h2>Library</h2>
             <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Rating</th>
-                    <th></th>
-                </tr>
-                {booksTable}
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>{booksTable}</tbody>
             </table>
         </div>
     );
